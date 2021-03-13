@@ -33,7 +33,7 @@
                 <filter
                     string="Completed Activities"
                     name="activities_completed"
-                    domain="[('active', '=', False), ('state', '=', 'done')]"
+                    domain="[('active', '=', False), ('done', '=', True)]"
                 />
             </field>
             <filter name="activities_overdue" position="attributes">
@@ -68,7 +68,7 @@
                 <filter
                     string="Completed Activities"
                     name="activities_completed"
-                    domain="[('activity_ids.active', '=', False), ('activity_ids.state', '=', 'done')]"
+                    domain="[('activity_ids.active', '=', False), ('activity_ids.done', '=', True)]"
                 />
             </filter>
             <filter name="activities_overdue" position="attributes">
