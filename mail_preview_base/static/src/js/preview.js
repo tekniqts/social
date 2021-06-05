@@ -73,7 +73,7 @@ odoo.define("mail_preview_base.preview", function(require) {
 
     var FieldPreviewViewer = DocumentViewer.extend({
         init: function(parent, attachments, activeAttachmentID, model, field) {
-            this.modelName = model;
+            this.fieldModelName = model;
             this.fieldName = field;
             this._super.apply(this, arguments);
         },
@@ -81,7 +81,7 @@ odoo.define("mail_preview_base.preview", function(require) {
             e.preventDefault();
             window.location =
                 "/web/content/" +
-                this.modelName +
+                this.fieldModelName +
                 "/" +
                 this.activeAttachment.id +
                 "/" +
@@ -93,7 +93,7 @@ odoo.define("mail_preview_base.preview", function(require) {
         _getContentUrl: function(attachment) {
             return (
                 "/web/content/" +
-                this.modelName +
+                this.fieldModelName +
                 "/" +
                 attachment.id +
                 "/" +
@@ -105,7 +105,7 @@ odoo.define("mail_preview_base.preview", function(require) {
         _getImageUrl: function(attachment) {
             return (
                 "/web/image/" +
-                this.modelName +
+                this.fieldModelName +
                 "/" +
                 attachment.id +
                 "/" +
@@ -134,12 +134,12 @@ odoo.define("mail_preview_base.preview", function(require) {
             this._super.apply(this, arguments);
             if (this.value) {
                 this.attachment = {
-                    mimetype: this.recordData.res_mimetype,
+                    mimetype: this.recordData.res_mimetype || this.recordData.mimetype,
                     id: this.res_id,
-                    fileType: this.recordData.res_mimetype,
-                    name: this.filename,
+                    fileType: this.recordData.res_mimetype || this.recordData.mimetype,
+                    name: this.recordData.name,
                 };
-                var mimetype = this.recordData.res_mimetype;
+                var mimetype = this.recordData.res_mimetype || this.recordData.mimetype;
                 var type = mimetype.split("/").shift();
                 if (DocumentViewer.prototype._hasPreview(type, this.attachment)) {
                     this.$el.prepend(
